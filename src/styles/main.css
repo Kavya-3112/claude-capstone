@@ -1,0 +1,316 @@
+/*
+ * Mobile-first styles (T-13). System fonts only: no third-party assets.
+ * Colours are chosen for WCAG 2.2 AA contrast (text on white >= 4.5:1,
+ * UI boundaries and focus >= 3:1); this is a design intent, not a conformance
+ * claim (NFR-08).
+ */
+:root {
+  --text: #1a1a1a;
+  --text-muted: #4d4d4d;
+  --bg: #ffffff;
+  --panel-bg: #f5f6f8;
+  --border: #6b6b6b;
+  --primary: #0b57d0;
+  --primary-text: #ffffff;
+  --danger: #b00020;
+  --danger-bg: #fdecee;
+  --warning-bg: #fff4d6;
+  --warning-border: #8a5a00;
+  --focus: #0b57d0;
+  --space: 1rem;
+  --radius: 0.5rem;
+  --target: 2.75rem; /* >= 44px tap target, above the WCAG 2.2 minimum of 24px */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: 1rem;
+  /* Long unbroken names or numbers wrap instead of causing horizontal scroll (NFR-01). */
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2 {
+  line-height: 1.25;
+  margin: 0 0 var(--space);
+}
+h1 {
+  font-size: 1.5rem;
+}
+h2 {
+  font-size: 1.2rem;
+}
+
+.site-header,
+.page,
+#banner-region {
+  width: min(100%, 40rem);
+  margin-inline: auto;
+  padding-inline: var(--space);
+}
+.site-header {
+  padding-block: var(--space);
+}
+.page {
+  padding-bottom: calc(var(--space) * 2);
+  display: grid;
+  gap: var(--space);
+}
+
+.panel {
+  background: var(--panel-bg);
+  border-radius: var(--radius);
+  padding: var(--space);
+  min-width: 0;
+}
+.panel > :last-child {
+  margin-bottom: 0;
+}
+
+/* Keyboard focus is always visible (NFR-04). */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+#list-heading:focus {
+  /* Programmatic focus target after a delete: show where focus went. */
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space);
+  top: -4rem;
+  background: var(--bg);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--text);
+  border-radius: var(--radius);
+  z-index: 10;
+}
+.skip-link:focus {
+  top: var(--space);
+}
+
+/* Forms (used by T-15, T-16, T-18) */
+.field {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: var(--space);
+  min-width: 0;
+}
+label {
+  font-weight: 600;
+}
+input[type='text'],
+input[type='tel'],
+input[type='search'] {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--target);
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+}
+input[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+.field-error {
+  color: var(--danger);
+  font-weight: 600;
+}
+.hint {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Buttons (T-15 to T-21) */
+.btn {
+  min-height: var(--target);
+  min-width: var(--target);
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--primary-text);
+  background: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.btn-secondary {
+  color: var(--primary);
+  background: var(--bg);
+}
+.btn-danger {
+  color: var(--primary-text);
+  background: var(--danger);
+  border-color: var(--danger);
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Contact list (T-14) */
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.contact-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  min-width: 0;
+}
+.contact-details {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+.contact-name {
+  font-weight: 700;
+}
+.contact-phone {
+  color: var(--text-muted);
+}
+
+/* Empty state, edit form and delete dialog (T-14, T-16, T-17) */
+.empty-state,
+.no-match {
+  margin: 0;
+  color: var(--text-muted);
+}
+.contact-item-editing {
+  display: block;
+}
+.edit-form {
+  width: 100%;
+}
+.confirm-dialog {
+  width: min(90vw, 28rem);
+  max-width: 100%;
+  padding: var(--space);
+  color: var(--text);
+  background: var(--bg);
+  border: 2px solid var(--text);
+  border-radius: var(--radius);
+  overflow-wrap: anywhere;
+}
+.confirm-dialog::backdrop {
+  background: rgb(0 0 0 / 0.6);
+}
+[hidden] {
+  display: none !important;
+}
+
+input[type='search'] {
+  /* keep the native clear control from shifting the layout at 320 px */
+  min-width: 0;
+}
+.notice {
+  margin: 0 0 var(--space);
+  padding: 0.5rem 0.75rem;
+  border-left: 4px solid var(--primary);
+  background: var(--bg);
+}
+
+/* Recovery panel (T-20) */
+.recovery-panel {
+  border: 2px solid var(--warning-border);
+  background: var(--warning-bg);
+}
+.recovery > * + * {
+  margin-top: 0.75rem;
+}
+.recovery p {
+  margin-bottom: 0;
+}
+.field-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+input[type='checkbox'] {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.1rem;
+}
+.btn:disabled {
+  color: #4d4d4d;
+  background: #e3e3e3;
+  border-color: #6b6b6b;
+  cursor: not-allowed;
+}
+#recovery-heading:focus,
+#list-heading:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Banners and messages (T-19 to T-21) */
+.banner {
+  margin-block: var(--space);
+  padding: 0.75rem var(--space);
+  border: 2px solid var(--warning-border);
+  border-radius: var(--radius);
+  background: var(--warning-bg);
+}
+.banner-error {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+
+/* Hidden visually but available to assistive technology (live regions). */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 40rem) {
+  h1 {
+    font-size: 1.75rem;
+  }
+  .panel {
+    padding: calc(var(--space) * 1.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

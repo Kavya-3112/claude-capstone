@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contacts</title>
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to contacts</a>
+
+    <header class="site-header">
+      <h1>Contacts</h1>
+    </header>
+
+    <!-- Persistent status banners (save status, recovery, stale tab) are rendered here by T-19..T-21.
+         Announcement strategy (CR-10): the banner text itself is static and not a live region. When a banner
+         appears or changes, the same text is sent once through the announcer (polite for information,
+         assertive for errors), which avoids double announcements. The region stays hidden while empty so
+         it is not an empty landmark. -->
+    <section id="banner-region" aria-label="Status messages" hidden></section>
+
+    <main id="main" class="page" tabindex="-1">
+      <!-- Recovery of unreadable data and leftover backups (T-20), filled by src/ui/recovery.ts -->
+      <section id="recovery-region" class="panel recovery-panel" aria-label="Data recovery" hidden></section>
+
+      <section id="add-section" aria-labelledby="add-heading" class="panel">
+        <h2 id="add-heading">Add a contact</h2>
+        <!-- Add form: T-15 -->
+      </section>
+
+      <section id="search-section" aria-labelledby="search-heading" class="panel">
+        <h2 id="search-heading">Search</h2>
+        <!-- Search input is created by src/ui/search.ts (T-18) -->
+      </section>
+
+      <section id="list-section" aria-labelledby="list-heading" class="panel">
+        <h2 id="list-heading" tabindex="-1">Contact list</h2>
+        <!-- Visible and announced when a new contact is hidden by the current search (DR-17) -->
+        <p id="search-notice" class="notice" hidden></p>
+        <!-- List, empty state and no-match message: T-14, T-18 -->
+        <div id="contact-list-region"></div>
+      </section>
+    </main>
+
+    <!-- Live regions exist from page load so announcements are reliable (NFR-05). -->
+    <div id="live-polite" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+    <div id="live-assertive" class="visually-hidden" role="alert"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
